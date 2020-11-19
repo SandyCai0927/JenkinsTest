@@ -1,53 +1,54 @@
+import org.testng.annotations.Test;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
 
 public class ArrayProgramTest {
 
     ArrayProgram program=new ArrayProgram();
 
-    @org.junit.Test
+    @Test
     public void init_array() {
         int[] arr1=program.init_array(3);
         int[] arr2={1,3,9};
-        assertArrayEquals(arr1,arr2);
+        assertEquals(arr1,arr2);
     }
 
-    @org.junit.Test
+    @Test
     public void init_string() {
         String str1="soiHIFS";
         String str2="SOIHIFS";
         assertEquals(program.init_string(str1),str2);
     }
 
-    @org.junit.Test
+    @Test
     public void arrayToString() {
         int[] arr=program.init_array(4);
         String str="141664";
         assertEquals(str,program.arrayToString(arr));
     }
 
-    @org.junit.Test
+    @Test
     public void abbrevPrint() {
         String str="abbreviate";
         String str1="ab...";
         assertEquals(str1,program.abbrevPrint(str));
     }
 
-    @org.junit.Test
+    @Test
     public void stringTail() {
         String str1="osdhg";
         String str2="osdhgcby";
         assertEquals(str2,program.stringTail(str1));
     }
 
-    @org.junit.Test
+    @Test
     public void arrayToInt(){
         int[] array={2,56,36};
         int num=796;
         assertEquals(num,program.arrayToInt(array));
     }
 
-    @org.junit.Test
+    @Test
     public void test_is_same(){
         int[] arr1={1,2,3};
         int[] arr2={1,2,3};
@@ -56,7 +57,7 @@ public class ArrayProgramTest {
         assertEquals(false,program.is_same(arr1,arr3));
     }
 
-    @org.junit.Test
+    @Test
     public void test_toString(){
         int[] array=program.init_array(5);
         String str=program.arrayToString(array);
@@ -67,7 +68,7 @@ public class ArrayProgramTest {
         assertEquals(true,flag);
     }
 
-    @org.junit.Test
+    @Test
     public void test_addAll(){
         int[] arr1={1,2,3};
         int[] arr2={3,5};

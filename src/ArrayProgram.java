@@ -90,7 +90,7 @@ public class ArrayProgram {
             else
                 break;
         }
-        if(i==len||i==ArrayUtils.getLength(array2))
+        if(i==len&&i==ArrayUtils.getLength(array2))
             return true;
         else
             return false;
