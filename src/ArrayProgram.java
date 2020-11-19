@@ -5,6 +5,10 @@ import static org.apache.commons.lang3.StringUtils.abbreviate;
 
 public class ArrayProgram {
 
+    public static void main(String[] args) {
+        System.out.println("Hello world！");
+    }
+
     /*
      * 给整型数组初始化，若n=0，则建立一个长度为1的数组，对于数组的值，则分别赋值为n的i次方
      */
