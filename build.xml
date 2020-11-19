@@ -12,7 +12,7 @@
         过则直接直接执行compile，如果没有则会先执行它依赖的target例如这里的init，然后在执行这个target-->
     <!--新建文件夹-->
     <target name="init">
-        <mkdir dir=""/>
+        <mkdir dir="build"/>
     </target>
     <!--开始编辑-->
     <target name="compile" depends="init">
@@ -26,7 +26,7 @@
     </target>
     <!--创建jar包-->
     <target name="build" depends="compile">
-        <jar jarfile="${ArrayProgramTest_jar}" basedir=""/>
+        <jar jarfile="build/${ArrayProgramTest_jar}" basedir=""/>
     </target>
     <!--开始运行-->
     <target name="run" depends="build">
@@ -35,7 +35,7 @@
     <!--删除生成的文件-->
     <target name="clean" depends="run">
         <delete dir=""/>
-        <delete file="${ArrayProgramTest_jar}"/>
+        <delete file="*.class"/>
     </target>
     <target name="rerun" depends="clean,run">
         <ant target="clean" />

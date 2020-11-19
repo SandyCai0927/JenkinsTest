@@ -1,6 +1,7 @@
 import org.testng.annotations.Test;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 public class ArrayProgramTest {
 
@@ -10,7 +11,7 @@ public class ArrayProgramTest {
     public void init_array() {
         int[] arr1=program.init_array(3);
         int[] arr2={1,3,9};
-        assertEquals(arr1,arr2);
+        assertArrayEquals(arr1,arr2);
     }
 
     @Test
