@@ -1,45 +1,150 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--build.xml中的第一句话，没有实际的意义-->
 <!--Ant的所有内容必须包含在<project></project>里面，name是你给它取的名字，basedir指工作的根目录，.代表当前目录，default代表默认要做的事情。-->
-<project name="ArrayProgramTest" default="run" basedir="">
-    <!--<property />设置变量-->
-    <property name="src" value="src" />
-    <property name="dest" value=""/>
-    <property name="libDir" value="lib"/>
-    <property name="test.dir" location="test"/>
-    <property name="ArrayProgramTest_jar" value="ArrayProgramTest.jar"/>
-    <!--每个target代表你想做的操作，给这个操作命名，及name值，depends是它所依赖的target在执行这个target，例如这里的compile之前ant会先检查init是否曾经被执行过，如果执行
-        过则直接直接执行compile，如果没有则会先执行它依赖的target例如这里的init，然后在执行这个target-->
-    <!--新建文件夹-->
-    <target name="init">
-        <mkdir dir="build"/>
-    </target>
-    <!--开始编辑-->
-    <target name="compile" depends="init">
-        <javac srcdir="${src}" destdir="" includeantruntime="false">
-            <classpath>
-                <fileset dir="${libDir}">
-                    <include name="*.jar" />
-                </fileset>
-            </classpath>
-        </javac>
-    </target>
-    <!--创建jar包-->
-    <target name="build" depends="compile">
-        <jar jarfile="build/${ArrayProgramTest_jar}" basedir=""/>
-    </target>
-    <!--开始运行-->
-    <target name="run" depends="build">
-        <java classname="ArrayProgramTest" classpath="${ArrayProgramTest_jar}"/>
-    </target>
-    <!--删除生成的文件-->
-    <target name="clean" depends="run">
-        <delete dir=""/>
-        <delete file="*.class"/>
-    </target>
-    <target name="rerun" depends="clean,run">
-        <ant target="clean" />
-        <ant target="run" />
+<project name="ArrayProgramTest" default="test">
+    <!--配置基本属性-->
+
+    <property name="src" value="src"/>
+
+    <property name="build" value="build"/>
+
+    <property name="lib" value="lib" />
+
+    <property name="dist" value="dist"/>
+
+    <property name="classpath" location="${build}"/>
+
+    <!--配置测试报告的属性-->
+
+    <property name="report"   value="report"/>
+
+    <property name="report.xml"  value="${report}/junit/xml"/>
+
+    <property name="report.html" value="${report}/junit/html"/>
+
+    <!--配置运行时classpath-->
+
+    <path id="classpath.run">
+
+        <pathelement path="${classpath}"/>
+
+        <fileset dir="${lib}">
+
+            <include name="*.jar"/>
+
+        </fileset>
+
+    </path>
+
+
+
+    <!--配置测试时classpath-->
+
+    <path id="classpath.test">
+
+        <path refid="classpath.run"/>
+
+        <path location="${dist}/lib/test.jar"/>
+
+    </path>
+
+
+
+    <!--任务初始化-->
+
+    <target name="init" >
+
+        <tstamp/>
+
+        <delete dir="${build}"/>
+
+        <delete dir="${report}"/>
+
+        <delete dir="${dist}"/>
+
+        <mkdir dir="${build}"/>
+
     </target>
 
+
+
+    <!--配置编译任务-->
+
+    <target name="compile" depends="init">
+
+        <javac srcdir="${src}" destdir="${build}">
+
+            <classpath refid="classpath.run" />
+
+        </javac>
+
+    </target>
+
+
+
+    <!--配置打包任务-->
+
+    <target name="dist" depends="compile">
+
+        <mkdir dir="${dist}/lib"/>
+
+        <jar jarfile="${dist}/lib/test.jar" basedir="${build}"/>
+
+    </target>
+
+
+
+    <!--配置运行任务-->
+
+    <target name="run" depends="compile, dist">
+
+        <java classname="ArrayProgramTest">
+
+            <classpath>
+
+                <path refid="classpath.run"/>
+
+            </classpath>
+
+        </java>
+
+    </target>
+
+
+
+    <!--配置JUnit测试，打印测试结果-->
+
+    <target name="test" depends="compile, dist">
+
+        <mkdir dir="${report.xml}"/>
+
+        <mkdir dir="${report.html}"/>
+
+        <junit printsummary="yes" haltonfailure="no">
+
+            <classpath refid="classpath.run"/>
+
+            <formatter type="xml"/>
+
+            <batchtest fork="yes" todir="${report.xml}">
+
+                <fileset dir="${src}" includes="**/*Test.java"/>
+
+            </batchtest>
+
+        </junit>
+
+        <junitreport todir="${report.html}">
+
+            <fileset dir="${report.xml}">
+
+                <include name="*.xml"/>
+
+            </fileset>
+
+            <report format="frames" todir="${report.html}"/>
+
+        </junitreport>
+
+    </target>
 </project>

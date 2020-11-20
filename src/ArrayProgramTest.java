@@ -1,4 +1,4 @@
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
