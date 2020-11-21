@@ -39,7 +39,7 @@ public class ArrayProgram {
     String abbrevPrint(String str){
         int len=str.length();
         String string;
-        if(len>10)
+        if(len>=10)
             string=abbreviate(str,"...",5);
         else
             string=str;
